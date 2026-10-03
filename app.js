@@ -1,20 +1,4 @@
-const seedData = [
-  {id:"seed-1",employee:"RAJAN",date:"2026-09-01",customer:"NAVNEET AGARWAL",mobile:"8126988054",application:"821104835642",premium:35849,sum_insured:"10LAC",plan:"ASPIRE GOLD +",addon:"TIERED NETWORK",status:"ISSUED",location:"BIJNOR",credit_factor:1},
-  {id:"seed-2",employee:"ROHIT",date:"2026-09-01",customer:null,mobile:"",application:"",premium:8972,sum_insured:"10LAC",plan:"ASPIRE GOLD +",addon:"-",status:"ISSUED",location:"AHMEDABAD",credit_factor:1},
-  {id:"seed-3",employee:"RAJAN",date:"2026-09-02",customer:"PRAVEEN",mobile:"",application:"",premium:17909,sum_insured:"10LAC",plan:"ASPIRE GOLD +",addon:"TIERED NETWORK",status:"ISSUED",location:"PRAYAGRAJ",credit_factor:1},
-  {id:"seed-4",employee:"PRINCE",date:"2026-09-02",customer:"DEEPAK KUMAR",mobile:"",application:"",premium:26432,sum_insured:"10LAC",plan:"ASPIRE GOLD +",addon:"-",status:"ISSUED",location:"PUNE",credit_factor:1},
-  {id:"seed-5",employee:"ROHIT",date:"2026-09-02",customer:"VIJAY KUMAR YADAV",mobile:"7892865084",application:"",premium:19610,sum_insured:"10LAC",plan:"ASPIRE GOLD +",addon:"TIERED NETWORK",status:"ISSUED",location:"GUJRAT",credit_factor:1},
-  {id:"seed-6",employee:"RAJAN",date:"2026-09-02",customer:"SONALI",mobile:"8624910864",application:"",premium:19528,sum_insured:"10LAC",plan:"ASPIRE GOLD +",addon:"TIERED NETWORK",status:"ISSUED",location:"PUNE",credit_factor:1},
-  {id:"seed-7",employee:"PRINCE",date:"2026-09-03",customer:"SUDHAKAR KUMAR",mobile:"9984266096",application:"",premium:17909,sum_insured:"10LAC",plan:"ASPIRE GOLD +",addon:"TIERED NETWORK",status:"ISSUED",location:"LUCKNOW",credit_factor:1},
-  {id:"seed-8",employee:"PRINCE",date:"2026-09-04",customer:"KAMAL HASSAN",mobile:"9706790767",application:"",premium:11498,sum_insured:"10LAC",plan:"ULTIMATE CARE",addon:"-",status:"ISSUED",location:"ASSAM",credit_factor:1},
-  {id:"seed-9",employee:"RAJAN",date:null,customer:null,mobile:"",application:"",premium:33048,sum_insured:null,plan:null,addon:null,status:"ISSUED",location:null,credit_factor:1},
-  {id:"seed-10",employee:"KAIF",date:null,customer:null,mobile:"",application:"",premium:25939,sum_insured:null,plan:null,addon:null,status:"ISSUED",location:null,credit_factor:1},
-  {id:"seed-11",employee:"KAIF",date:null,customer:null,mobile:"",application:"",premium:36338,sum_insured:null,plan:null,addon:null,status:"ISSUED",location:null,credit_factor:1},
-  {id:"seed-12",employee:"HIMANSHU",date:null,customer:null,mobile:"",application:"",premium:52487,sum_insured:null,plan:null,addon:null,status:"ISSUED",location:null,credit_factor:1},
-  {id:"seed-13",employee:"KAVYANSH",date:null,customer:null,mobile:"",application:"",premium:22546,sum_insured:null,plan:null,addon:null,status:"ISSUED",location:null,credit_factor:1},
-  {id:"seed-14",employee:"ROHIT",date:null,customer:null,mobile:"",application:"",premium:39702,sum_insured:null,plan:null,addon:null,status:"ISSUED",location:null,credit_factor:1},
-  {id:"seed-15",employee:"NIKHIL",date:null,customer:null,mobile:"",application:"",premium:30371,sum_insured:null,plan:null,addon:null,status:"ISSUED",location:null,credit_factor:1}
-];
+const seedData = [];
 
 const CONFIG={url:window.SUPABASE_URL||"",key:window.SUPABASE_ANON_KEY||""};
 let rows=[],supabaseClient=null;
@@ -38,13 +22,13 @@ async function init(){
   setupEmployees(); $("fDate").value="2026-10-01"; render(); setupEvents(); updateCalc();
 }
 async function loadCloud(){
-  const {data,error}=await supabaseClient.from("business").select("*").order("date",{ascending:false}).order("created_at",{ascending:false});
-  if(error){console.error(error);$("syncStatus").textContent="● CLOUD ERROR";rows=seedData;return}
+  const {data,error}=await supabaseClient.from("business_oct").select("*").order("date",{ascending:false}).order("created_at",{ascending:false});
+  if(error){console.error(error);$("syncStatus").textContent="● CLOUD ERROR";rows=[];return}
   rows=data||[];
 }
 async function saveRow(r){
   if(supabaseClient){
-    const {error}=await supabaseClient.from("business").insert([r]);
+    const {error}=await supabaseClient.from("business_oct").insert([r]);
     if(error){alert("Could not save to cloud: "+error.message);return false}
     await loadCloud();return true;
   }

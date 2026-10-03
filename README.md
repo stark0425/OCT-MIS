@@ -49,3 +49,9 @@ Net ex-GST = Credit ÷ 1.18
 The existing Supabase configuration is retained in config.js. The frontend uses the public publishable/anon key only.
 
 For a production company MIS, keep RLS/authentication enabled and restrict editing by employee/admin role.
+
+## Supabase October connection
+- This build reads from and inserts into `public.business_oct`.
+- It does not read from or write to the September `business` table.
+- Keep RLS enabled with SELECT and INSERT policies on `business_oct`.
+- The frontend uses the public publishable/anon key only.
