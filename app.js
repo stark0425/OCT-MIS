@@ -24,7 +24,10 @@ async function init(){
   setupEmployees(); $("fDate").value="2026-10-01"; render(); setupEvents(); updateCalc();
 }
 async function loadCloud(){
-  const {data,error}=await supabaseClient.from("business_oct").select("*").order("date",{ascending:false}).order("created_at",{ascending:false});
+  const {data,error}=await supabaseClient
+  .from("business_oct")
+  .select("*")
+  .order("date", { ascending: false });
   if(error){console.error(error);$("syncStatus").textContent="● CLOUD ERROR";rows=[];return}
   rows=data||[];
 }
