@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>OCT MIS — Business Oct</title>
+  <title>OCT MIS PRO — Business Command Center</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -13,7 +13,7 @@
 <header class="topbar">
   <div class="brand">
     <span class="orb"></span>
-    <div><b>OCT MIS </i></b><small>BUSINESS · OCTOBER 2026</small></div>
+    <div><b>OCT MIS <i>PRO</i></b><small>BUSINESS COMMAND CENTER · OCTOBER 2026</small></div>
   </div>
   <div class="top-actions">
     <span id="syncStatus" class="sync">LOCAL DEMO</span>
@@ -27,7 +27,7 @@
   <section class="hero">
     <div>
       <div class="eyebrow">OCTOBER 2026 / LIVE OPERATIONS</div>
-      <h1>October <span>MIS.</span></h1>
+      <h1>October <span>command center.</span></h1>
       <p>Every deal, every employee, every category and every credit detail — in one management-ready MIS.</p>
     </div>
     <div class="hero-tools">
@@ -41,12 +41,13 @@
     <article class="stat"><div class="stat-icon">◆</div><small>CREDIT BUSINESS</small><strong id="credit">₹0</strong><em>after category factor</em></article>
     <article class="stat"><div class="stat-icon">↗</div><small>NET EX-GST</small><strong id="net">₹0</strong><em>credit ÷ 1.18</em></article>
     <article class="stat"><div class="stat-icon">◉</div><small>AVERAGE TICKET</small><strong id="avg">₹0</strong><em id="topValue">per business</em></article>
+    <article class="stat target-stat"><div class="stat-icon">◎</div><small>MONTHLY NET TARGET / PERSON</small><strong>₹2,00,000</strong><em>Net business target for every employee</em></article>
   </section>
 
   <section class="mini-grid">
     <article class="panel highlight">
       <div><small>MONTH SNAPSHOT</small><h2 id="monthTitle">October 2026</h2></div>
-      <div class="snapshot"><b id="issuedCount">0</b><span>Issued</span><b id="pendingCount">0</b><span>Pending/Login</span><b id="rejectedCount">0</b><span>Rejected</span></div>
+      <div class="snapshot"><b id="issuedCount">0</b><span>Issued</span><b id="pendingCount">0</b><span>Pending/Login</span><b id="rejectedCount">0</b><span>Rejected</span><b id="cancelledCount">0</b><span>Cancelled from net</span></div>
     </article>
     <article class="panel">
       <div class="panel-head compact"><div><small>CATEGORY MIX</small><h2>Credit factor distribution</h2></div></div>
@@ -79,7 +80,7 @@
         <input id="search" placeholder="Search customer / employee / app no. / plan">
         <select id="statusFilter">
           <option value="ALL">All Status</option><option>ISSUED</option><option>LOGIN</option>
-          <option>PENDING</option><option>REJECTED</option>
+          <option>PENDING</option><option>REJECTED</option><option value="CANCELLED">Cancelled from Net</option>
         </select>
         <select id="factorFilter">
           <option value="ALL">All Factors</option>
@@ -93,7 +94,7 @@
         <thead><tr>
           <th>EMPLOYEE</th><th>DATE</th><th>CUSTOMER</th><th>MOBILE</th><th>APPLICATION</th>
           <th>SUM INSURED</th><th>PLAN</th><th>ADD-ON</th><th>LOCATION / CATEGORY</th>
-          <th>STATUS</th><th>GROSS</th><th>FACTOR</th><th>CREDIT</th><th>NET</th>
+          <th>STATUS</th><th>GROSS</th><th>FACTOR</th><th>CREDIT</th><th>NET COUNTED</th><th>NET ACTION</th>
         </tr></thead>
         <tbody id="ledger"></tbody>
       </table>
@@ -117,7 +118,7 @@
     <label>Sum Insured<input id="fSI" placeholder="e.g. 10 LAC"></label>
     <label>Plan Name<input id="fPlan" placeholder="e.g. ASPIRE GOLD +"></label>
     <label>Extra Add-On<input id="fAddon" placeholder="Optional"></label>
-    <label>Status<select id="fStatus"><option>ISSUED</option><option>LOGIN</option><option>PENDING</option><option>REJECTED</option></select></label>
+    <label>Status<select id="fStatus"><option>ISSUED</option><option>LOGIN</option><option>PENDING</option><option>REJECTED</option><option value="CANCELLED">Cancelled from Net</option></select></label>
     <label>Location / Category
       <select id="fLocation">
         <option value="ALL">ALL — 100%</option>

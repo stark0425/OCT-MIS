@@ -55,3 +55,21 @@ For a production company MIS, keep RLS/authentication enabled and restrict editi
 - It does not read from or write to the September `business` table.
 - Keep RLS enabled with SELECT and INSERT policies on `business_oct`.
 - The frontend uses the public publishable/anon key only.
+
+
+## Added in this update
+- Each employee is shown against a ₹2,00,000 monthly net-business target.
+- Employee leaderboard shows net achieved, target progress, and remaining amount.
+- Each policy has a `Cancel for Net` action. Cancellation keeps gross premium counted but excludes its net ex-GST amount from net business and target progress.
+- Cancelled policies can be restored to net business.
+- CSV export includes cancellation status and counted net business.
+
+## Required Supabase migration
+Run this once in Supabase SQL Editor before using cancellation actions with cloud sync:
+
+```sql
+ALTER TABLE public.business_oct
+ADD COLUMN IF NOT EXISTS cancelled_from_net boolean NOT NULL DEFAULT false;
+```
+
+Existing rows default to `false`, so existing business remains included in net business. After running the migration, refresh the website.
