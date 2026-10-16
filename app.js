@@ -59,7 +59,10 @@ async function loadCloud() {
   }
 }
 
-  r.id="local-"+Date.now(); rows.unshift(r);localStorage.setItem("oct_mis_rows",JSON.stringify(rows));return true;
+  r.id="local-"+Date.now();
+rows.unshift(r);
+localStorage.setItem("oct_mis_rows",JSON.stringify(rows));
+return true;
 }
 const EMPLOYEE_MASTER=["HIMANSHU","RAJAN","ROHIT","AKASH","KAIF","NIKHIL","KAVYANSH","PRINCE","SUMAN"];
 function setupEmployees(){
