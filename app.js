@@ -57,8 +57,6 @@ async function loadCloud() {
     if (status) status.textContent = "● CLOUD ERROR";
     return false;
   }
-}
-
   r.id="local-"+Date.now();
 rows.unshift(r);
 localStorage.setItem("oct_mis_rows",JSON.stringify(rows));
