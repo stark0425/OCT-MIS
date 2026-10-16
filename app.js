@@ -12,31 +12,53 @@ const isCancelled=r=>Boolean(r.cancelled_from_net);
 const netCountedFor=r=>isCancelled(r)?0:netFor(r);
 const monthKey=()=>$("monthFilter").value||"2026-10";
 
-async function init(){
-  if(CONFIG.url&&CONFIG.key){
-    supabaseClient=window.supabase.createClient(CONFIG.url,CONFIG.key);
-    $("syncStatus").textContent="● CLOUD SYNC"; await loadCloud();
-  }else{
-    $("syncStatus").textContent="LOCAL DEMO";
-    rows=JSON.parse(localStorage.getItem("oct_mis_rows")||"null")||seedData;
-    localStorage.setItem("oct_mis_rows",JSON.stringify(rows));
+async function loadCloud() {
+  try {
+    const { data, error } = await supabaseClient
+      .from("business_oct")
+      .select("*")
+      .order("date", { ascending: false });
+
+    if (error) {
+      console.error("Supabase Cloud Error:", {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint
+      });
+
+      const status = document.getElementById("syncStatus");
+      if (status) status.textContent = "● CLOUD ERROR — CHECK CONSOLE";
+
+      // IMPORTANT: Do not clear existing rows on a failed request.
+      return false;
+    }
+
+    if (!Array.isArray(data)) {
+      console.error("Supabase returned unexpected data:", data);
+      return false;
+    }
+
+    rows = data;
+
+    try {
+      localStorage.setItem("oct_mis_rows", JSON.stringify(rows));
+    } catch (storageError) {
+      console.warn("Local cache could not be updated:", storageError);
+    }
+
+    const status = document.getElementById("syncStatus");
+    if (status) status.textContent = "● CLOUD SYNC";
+
+    return true;
+  } catch (error) {
+    console.error("Cloud connection failed:", error);
+    const status = document.getElementById("syncStatus");
+    if (status) status.textContent = "● CLOUD ERROR";
+    return false;
   }
-  setupEmployees(); $("fDate").value="2026-10-01"; render(); setupEvents(); updateCalc();
 }
-async function loadCloud(){
-  const {data,error}=await supabaseClient
-  .from("business_oct")
-  .select("*")
-  .order("date", { ascending: false });
-  if(error){console.error(error);$("syncStatus").textContent="● CLOUD ERROR";rows=[];return}
-  rows=data||[];
-}
-async function saveRow(r){
-  if(supabaseClient){
-    const {error}=await supabaseClient.from("business_oct").insert([r]);
-    if(error){alert("Could not save to cloud: "+error.message);return false}
-    await loadCloud();return true;
-  }
+
   r.id="local-"+Date.now(); rows.unshift(r);localStorage.setItem("oct_mis_rows",JSON.stringify(rows));return true;
 }
 const EMPLOYEE_MASTER=["HIMANSHU","RAJAN","ROHIT","AKASH","KAIF","NIKHIL","KAVYANSH","PRINCE","SUMAN"];
