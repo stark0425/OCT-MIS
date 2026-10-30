@@ -34,7 +34,7 @@ async function saveRow(r){
   }
   r.id="local-"+Date.now(); rows.unshift(r);localStorage.setItem("oct_mis_rows",JSON.stringify(rows));return true;
 }
-const EMPLOYEE_MASTER=["HIMANSHU","RAJAN","ROHIT","AKASH","KAIF","NIKHIL","KAVYANSH","PRINCE","SUMAN"];
+const EMPLOYEE_MASTER=["HIMANSHU","RAJAN","ROHIT","AKASH","KAIF","NIKHIL","KAVYANSH","PRINCE","SUMAN","RUBY"];
 function setupEmployees(){
   const emps=EMPLOYEE_MASTER.slice();
   $("employeeFilter").innerHTML='<option value="ALL">All Employees</option>'+emps.map(e=>`<option>${esc(e)}</option>`).join("");
